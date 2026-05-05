@@ -11,7 +11,7 @@ const PI_API_KEY = process.env.PI_API_KEY;
 const PI_API_URL = 'https://api.minepi.com/v2';
 const HEADERS = { 'Authorization': `Key ${PI_API_KEY}` };
 
-// قاعدة البيانات
+// قاعدة البيانات مع حقل type
 const db = new sqlite3.Database('./escrow.db');
 db.run(`
   CREATE TABLE IF NOT EXISTS deals (
@@ -20,22 +20,23 @@ db.run(`
     buyer_uid TEXT,
     title TEXT NOT NULL,
     amount REAL NOT NULL,
+    type TEXT DEFAULT 'other',
     status TEXT NOT NULL DEFAULT 'waiting_payment',
     txid TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )
 `);
 
-// إنشاء صفقة جديدة
+// إنشاء صفقة جديدة مع type
 app.post('/create-deal', async (req, res) => {
-  const { seller_uid, title, amount } = req.body;
+  const { seller_uid, title, amount, type } = req.body;
   if (!seller_uid ||!title ||!amount) {
     return res.status(400).json({ error: 'Missing data' });
   }
   const dealId = 'deal_' + Math.random().toString(36).substr(2, 9);
   db.run(
-    `INSERT INTO deals (id, seller_uid, title, amount) VALUES (?,?,?,?)`,
-    [dealId, seller_uid, title, amount],
+    `INSERT INTO deals (id, seller_uid, title, amount, type) VALUES (?,?,?,?,?)`,
+    [dealId, seller_uid, title, amount, type || 'other'],
     function(err) {
       if (err) return res.status(500).json({ error: 'DB error' });
       res.json({
