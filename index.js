@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { Pi } = require('pi-backend');
+const Pi = require('@pinetwork/pi-nodejs');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
