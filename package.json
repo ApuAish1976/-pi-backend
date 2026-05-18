@@ -1,0 +1,31 @@
+{
+  "name": "cortex-escrow-testnet-backend",
+  "version": "12.2.1",
+  "description": "Backend API for Cortex Escrow Pi Network Testnet integration",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "check": "node --check index.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "ethers": "^6.13.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.4.1",
+    "helmet": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "pi-network",
+    "pi-testnet",
+    "escrow",
+    "cortex"
+  ],
+  "license": "UNLICENSED"
+}
